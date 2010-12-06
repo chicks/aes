@@ -1,6 +1,6 @@
 = aes
 
-An AES encrypt/decrypt gem built ontop of OpenSSL.  Not as quick as FastAES, but it doesn't require building native extensions and supports Base64 encoded input and output.
+An AES encrypt/decrypt gem built on top of OpenSSL.  Not as quick as FastAES but doesn't require building native extensions - also supports Base64 encoded input and output.
 
 Usage:
 
@@ -10,11 +10,11 @@ Usage:
  key = AES.key(32)  
   => "290c3c5d812a4ba7ce33adf09598a462"
 
- # Encrypt something, default output is base_64 encoded.  init_vector and cipher_text are joined with "$"
+ # Encrypt a string.  Default output is base_64 encoded, init_vector and cipher_text are joined with "$"
  b64 = AES.encrypt(key, "A super secret message")
   => "IJjbgbv/OvPIAf4R5qAWyg==$fy0v7JwRX4kyAWflgouQlt9XGmiDKvbQMRHmQ+vy1fA="
 
- # Same as above but minus the base64 encoding, initialization vector and cipher_text are shoved into an array
+ # Same as above but minus the base64 encoding, init_vector and cipher_text are shoved into an array
  plain = AES.encrypt(key, "A super secret message", {:format => :plain}) #
   => [";\202\222\306\376<\206\343\023\245\312\225\214KAm", 
       "C\343\023\323U~W>\023y\217\341\201\371\352\334\311^\307\352{\020 H(DVw\3224N\223"]

@@ -7,22 +7,30 @@ Usage:
  require 'aes'
 
  # Generate a random key
- key = AES.key(32)  
+ key = AES.key
   => "290c3c5d812a4ba7ce33adf09598a462"
-
+  
  # Encrypt a string.  Default output is base_64 encoded, init_vector and cipher_text are joined with "$"
- b64 = AES.encrypt(key, "A super secret message")
+ b64 = AES.encrypt("A super secret message", key)
   => "IJjbgbv/OvPIAf4R5qAWyg==$fy0v7JwRX4kyAWflgouQlt9XGmiDKvbQMRHmQ+vy1fA="
 
  # Same as above but minus the base64 encoding, init_vector and cipher_text are shoved into an array
- plain = AES.encrypt(key, "A super secret message", {:format => :plain}) #
+ plain = AES.encrypt("A super secret message", key, {:format => :plain}) #
   => [";\202\222\306\376<\206\343\023\245\312\225\214KAm", 
       "C\343\023\323U~W>\023y\217\341\201\371\352\334\311^\307\352{\020 H(DVw\3224N\223"]
+
+ # Generate a random initialization vector
+ iv = AES.iv(:base_64)
+  => "IJjbgbv/OvPIAf4R5qAWyg=="
  
- AES.decrypt(key, b64)
+ # Encrypt a string, with a provided key and init_vector.  
+ b64_iv = AES.encrypt("A super secret message", key, {:iv => iv})
+  => "IJjbgbv/OvPIAf4R5qAWyg==$fy0v7JwRX4kyAWflgouQlt9XGmiDKvbQMRHmQ+vy1fA="
+ 
+ AES.decrypt(b64, key)
   => "A super secret message"
  
- AES.decrypt(key, plain, {:format => :plain})
+ AES.decrypt(plain, key, {:format => :plain})
   => "A super secret message" 
 
 == Contributing to aes

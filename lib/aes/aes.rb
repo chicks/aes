@@ -122,11 +122,13 @@ module AES
       # Merge init options with defaults
       def merge_options(opts)
         @options = {
-          :format => :base_64,
-          :cipher => "AES-256-CBC",
-          :iv     => nil,
+          :format  => :base_64,
+          :cipher  => "AES-256-CBC",
+          :iv      => nil,
+          :padding => true, # use cipher padding by default
         }.merge! opts
         _handle_iv
+        _handle_padding
       end
       
       def _handle_iv
@@ -139,11 +141,17 @@ module AES
         end
       end
       
+      def _handle_padding
+        # convert value to what OpenSSL module format expects
+        @options[:padding] = @options[:padding] ? 1 : 0
+      end
+      
       # Create a new cipher using the cipher type specified
       def _setup(action)
         @cipher ||= OpenSSL::Cipher::Cipher.new(@options[:cipher]) 
         # Toggles encryption mode
         @cipher.send(action)
+        @cipher.padding = @options[:padding]
         @cipher.key = @key.unpack('a2'*32).map{|x| x.hex}.pack('c'*32)
       end
   end

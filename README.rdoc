@@ -33,6 +33,21 @@ Usage:
  AES.decrypt(plain, key, {:format => :plain})
   => "A super secret message" 
 
+ # By default data is padded to the nearest 16 bytes block.  To turn
+ # this off, you may use the :padding => false (or nil) option.
+ #
+ # In this mode however, the caller is required to pad the data.  In
+ # the following example the message is exactly 16 bytes long, so no
+ # error aries.
+ msg = AES.encrypt("A secret message", key, {:padding => false})
+  => "SnD+WIfEfjZRrl+WAM/9pw==$89sGGZsu973j8Gl6aXC8Uw=="
+
+ # Be sure to pass the same padding option when decrypting the
+ # message, as it will fail if you try to decrypt unpadded data and
+ # didn't specify :padding => false.
+ AES.decrypt(msg, key, {:padding => false})
+  => "A secret message"
+
 == Contributing to aes
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

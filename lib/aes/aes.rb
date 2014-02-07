@@ -11,7 +11,7 @@ module AES
     # Generates a random key of the specified length in bits
     # Default format is :plain
     def key(length=256,format=:plain)
-      key = ::AES::AES.new("").random_key(256)
+      key = ::AES::AES.new("").random_key(length)
       case format
       when :base_64
         Base64.encode64(key).chomp

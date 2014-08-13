@@ -84,7 +84,7 @@ module AES
   
     # Generate a random key
     def random_key(length=256)
-      _random_seed.unpack('H*')[0][0..((length/8)-1)]
+      _random_seed(length/8).unpack('H*')[0]
     end
   
     private

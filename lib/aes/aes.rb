@@ -1,4 +1,6 @@
 module AES
+  DEFAULT_AES_CIPHER = "AES-256-CBC"
+
   class << self
     # Encrypts the plain_text with the provided key
     def encrypt(plain_text, key, opts={})
@@ -22,7 +24,9 @@ module AES
     # Generates a random iv 
     # Default format is :plain
     def iv(format=:plain)
-      iv = ::AES::AES.new("").random_iv
+      cipher = OpenSSL::Cipher::Cipher.new(DEFAULT_AES_CIPHER)
+      cipher.encrypt
+      iv = cipher.random_iv
       case format
       when :base_64
         Base64.encode64(iv).chomp
@@ -44,7 +48,7 @@ module AES
       merge_options opts
       @cipher = nil
       @key    = key
-      @iv   ||= random_iv
+      @iv   ||= ::AES.iv
       self
     end
   
@@ -77,9 +81,11 @@ module AES
     end
 
     # Generate a random initialization vector
+    # There's no reason to call random_iv on an instance
+    # This has been left for backwards compatibility,
+    # but it now just delegates to the class method
     def random_iv
-      _setup(:encrypt)
-      @cipher.random_iv
+      ::AES.iv(@options[:format])
     end
   
     # Generate a random key
@@ -123,7 +129,7 @@ module AES
       def merge_options(opts)
         @options = {
           :format  => :base_64,
-          :cipher  => "AES-256-CBC",
+          :cipher  => ::AES::DEFAULT_AES_CIPHER,
           :iv      => nil,
           :padding => true, # use cipher padding by default
         }.merge! opts

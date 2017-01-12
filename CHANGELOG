@@ -1,0 +1,5 @@
+2017-01-12
+
+* No longer accept keys that are not in hex string format
+* No longer accept keys that are not of the correct length (64 characters hex == 256 bits raw binary)
+* Generated keys use only secure random from OpenSSL::Random. If OpenSSL::Random is not defined, AES will no longer work (whereas it used to use an insecure key generating method)

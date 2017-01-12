@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
     "Gemfile",
     "LICENSE.txt",
     "README.rdoc",
+    "CHANGELOG",
     "Rakefile",
     "VERSION",
     "aes.gemspec",

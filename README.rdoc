@@ -8,30 +8,29 @@ Usage:
 
  # Generate a random key
  key = AES.key
-  => "290c3c5d812a4ba7ce33adf09598a462"
-  
+  => "3a45d76fa5f0bd21f8dfd3f4e98fc4effe59e503857618cf58a11a31a276177b"
+
  # Encrypt a string.  Default output is base_64 encoded, init_vector and cipher_text are joined with "$"
  b64 = AES.encrypt("A super secret message", key)
-  => "IJjbgbv/OvPIAf4R5qAWyg==$fy0v7JwRX4kyAWflgouQlt9XGmiDKvbQMRHmQ+vy1fA="
+  => "IuTX8xX2XrrTVsq6SwWtFw==$+A8IiuUgPE+nRFVinA0vd5LUInd3QM3rGViNJIq3mx4="
 
  # Same as above but minus the base64 encoding, init_vector and cipher_text are shoved into an array
  plain = AES.encrypt("A super secret message", key, {:format => :plain}) #
-  => [";\202\222\306\376<\206\343\023\245\312\225\214KAm", 
-      "C\343\023\323U~W>\023y\217\341\201\371\352\334\311^\307\352{\020 H(DVw\3224N\223"]
+  => ["xF.^\x80ML'6\x10F2Z\xF8\x9Ep", "r\xA8P\xEBP\x10_\xC1\xD3B\xC3\xAB\xB3_qy\x91Q\x8C~\x1Ec\x9FD'\x8D\xB8\xBF\xB0\xA6\a\x9A"]
 
  # Generate a random initialization vector
  iv = AES.iv(:base_64)
-  => "IJjbgbv/OvPIAf4R5qAWyg=="
- 
- # Encrypt a string, with a provided key and init_vector.  
+  => "G8iY1e3Yvf6OqFAD4w2ZVw=="
+
+ # Encrypt a string, with a provided key and init_vector.
  b64_iv = AES.encrypt("A super secret message", key, {:iv => iv})
-  => "IJjbgbv/OvPIAf4R5qAWyg==$fy0v7JwRX4kyAWflgouQlt9XGmiDKvbQMRHmQ+vy1fA="
- 
+  => "G8iY1e3Yvf6OqFAD4w2ZVw==$B68lzBMXyOLXBSbPg4BgLBQRf68xVmS2oK4r2Xb+tXc="
+
  AES.decrypt(b64, key)
   => "A super secret message"
- 
+
  AES.decrypt(plain, key, {:format => :plain})
-  => "A super secret message" 
+  => "A super secret message"
 
  # By default data is padded to the nearest 16 bytes block.  To turn
  # this off, you may use the :padding => false (or nil) option.
@@ -40,7 +39,7 @@ Usage:
  # the following example the message is exactly 16 bytes long, so no
  # error aries.
  msg = AES.encrypt("A secret message", key, {:padding => false})
-  => "SnD+WIfEfjZRrl+WAM/9pw==$89sGGZsu973j8Gl6aXC8Uw=="
+  => "3orl0zsORP06B8+eyM+XsQ==$bqsvFPjTOzccKA/N3IEnug=="
 
  # Be sure to pass the same padding option when decrypting the
  # message, as it will fail if you try to decrypt unpadded data and

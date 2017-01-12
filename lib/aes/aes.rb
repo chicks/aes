@@ -50,6 +50,9 @@ module AES
       merge_options opts
       @cipher = nil
       @key    = key
+      unless @key =~ /\A[A-F0-9]{64}\z/i
+        raise ArgumentError, "AES Key must be a 64 character hex string"
+      end
       @iv   ||= ::AES.iv
       self
     end

@@ -13,7 +13,9 @@ module AES
     # Generates a random key of the specified length in bits
     # Default format is :plain
     def key(length=256,format=:plain)
-      key = ::AES::AES.new("").random_key(length)
+      bytes = OpenSSL::Random.random_bytes(length/8)
+      key = bytes.unpack('H*')[0]
+
       case format
       when :base_64
         Base64.encode64(key).chomp
@@ -90,21 +92,11 @@ module AES
   
     # Generate a random key
     def random_key(length=256)
-      _random_seed.unpack('H*')[0][0..((length/8)-1)]
+      ::AES.key(length)
     end
   
     private
-    
-      # Generates a random seed value
-      def _random_seed(size=32)
-        if defined? OpenSSL::Random
-          return OpenSSL::Random.random_bytes(size)
-        else
-          chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-          (1..size).collect{|a| chars[rand(chars.size)] }.join        
-        end
-      end
-    
+
       # Un-Base64's the IV and CipherText
       # Returns an array containing the IV, and CipherText
       def b64_d(data)
@@ -158,7 +150,7 @@ module AES
         # Toggles encryption mode
         @cipher.send(action)
         @cipher.padding = @options[:padding]
-        @cipher.key = @key.unpack('a2'*32).map{|x| x.hex}.pack('c'*32)
+        @cipher.key = [@key].pack("H*")
       end
   end
 end

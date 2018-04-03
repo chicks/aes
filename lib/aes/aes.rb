@@ -1,5 +1,5 @@
 module AES
-  DEFAULT_AES_CIPHER = 'AES-256-CBC'.freeze
+  DEFAULT_AES_CIPHER = "AES-256-CBC".freeze
 
   class << self
     # Encrypts the plain_text with the provided key
@@ -16,7 +16,7 @@ module AES
     # Default format is :plain
     def key(length = 256, format = :plain)
       bytes = OpenSSL::Random.random_bytes(length / 8)
-      key = bytes.unpack('H*')[0]
+      key = bytes.unpack("H*")[0]
 
       case format
       when :base_64
@@ -53,7 +53,7 @@ module AES
     def initialize(key, opts = {})
       merge_options opts
       unless key =~ /\A[A-F0-9]{64}\z/i
-        raise ArgumentError, 'AES Key must be a 64 character hex string'
+        raise ArgumentError, "AES Key must be a 64 character hex string"
       end
       @cipher = nil
       @key    = key
@@ -68,7 +68,7 @@ module AES
       @cipher.iv = @iv
       @cipher_text = case @options[:format]
                      when :base_64
-                       b64_e(@iv) << '$' << b64_e(_encrypt)
+                       b64_e(@iv) << "$" << b64_e(_encrypt)
                      else
                        [@iv, _encrypt]
                      end
@@ -108,7 +108,7 @@ module AES
     # Returns an array containing the IV, and CipherText
     def b64_d(data)
       iv_and_ctext = []
-      data.split('$').each do |part|
+      data.split("$").each do |part|
         iv_and_ctext << Base64.decode64(part)
       end
       iv_and_ctext
@@ -157,7 +157,7 @@ module AES
       # Toggles encryption mode
       @cipher.send(action)
       @cipher.padding = @options[:padding]
-      @cipher.key = [@key].pack('H*')
+      @cipher.key = [@key].pack("H*")
     end
   end
 end

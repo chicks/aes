@@ -148,7 +148,7 @@ module AES
       
       # Create a new cipher using the cipher type specified
       def _setup(action)
-        @cipher ||= OpenSSL::Cipher::Cipher.new(@options[:cipher]) 
+        @cipher ||= OpenSSL::Cipher.new(@options[:cipher]) 
         # Toggles encryption mode
         @cipher.send(action)
         @cipher.padding = @options[:padding]

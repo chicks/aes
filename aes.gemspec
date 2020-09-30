@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "aes"
-  s.version = "0.5.0"
+  s.version = "0.5.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Carl Hicks"]
-  s.date = "2012-05-01"
+  s.date = "2020-09-30"
   s.description = "An AES encrypt/decrypt gem built ontop of OpenSSL.  Not as quick as FastAES, but it doesn't require building\n    native extensions and supports Base64 encoded input and output."
   s.email = "carl.hicks@gmail.com"
   s.extra_rdoc_files = [

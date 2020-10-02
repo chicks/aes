@@ -92,7 +92,7 @@ module AES
       # Generates a random seed value
       def _random_seed(size=32)
         if defined? OpenSSL::Random
-          return OpenSSL::Random.random_bytes(size)
+          OpenSSL::Random.random_bytes(size)
         else
           chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
           (1..size).collect{|a| chars[rand(chars.size)] }.join        

@@ -152,7 +152,7 @@ module AES
         # Toggles encryption mode
         @cipher.send(action)
         @cipher.padding = @options[:padding]
-        @cipher.key = @key.unpack('a2'*32).map{|x| x.hex}.pack('c'*32)
+        @cipher.key = @key.unpack('a2'*@cipher.key_len).map{|x| x.hex}.pack('c'*@cipher.key_len)
       end
   end
 end

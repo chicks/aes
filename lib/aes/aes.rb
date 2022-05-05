@@ -14,7 +14,7 @@ module AES
       key = ::AES::AES.new("").random_key(length)
       case format
       when :base_64
-        Base64.encode64(key).chomp
+        Base64.urlsafe_encode64(key).chomp
       else
         key
       end
@@ -25,7 +25,7 @@ module AES
       iv = ::AES::AES.new("").random_iv
       case format
       when :base_64
-        Base64.encode64(iv).chomp
+        Base64.urlsafe_encode64(iv).chomp
       else
         iv
       end      

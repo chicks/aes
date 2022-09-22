@@ -84,7 +84,7 @@ module AES
   
     # Generate a random key
     def random_key(length=256)
-      _random_seed.unpack('H*')[0][0..((length/8)-1)]
+      _random_seed.unpack('H*')[0][0..((length/4)-1)]
     end
   
     private
@@ -94,8 +94,7 @@ module AES
         if defined? OpenSSL::Random
           return OpenSSL::Random.random_bytes(size)
         else
-          chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-          (1..size).collect{|a| chars[rand(chars.size)] }.join        
+          (1..size).collect{ rand(256).chr }.join
         end
       end
     

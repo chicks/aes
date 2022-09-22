@@ -32,8 +32,8 @@ class TestAES < Test::Unit::TestCase
   end
   
   should "generate a new key when AES#key" do
-    assert_equal 32, AES.key.length
-    assert_equal 44, AES.key(256, :base_64).length
+    assert_equal 64, AES.key.length
+    assert_equal 89, AES.key(256, :base_64).length
   end
     
 end
